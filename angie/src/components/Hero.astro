@@ -7,7 +7,7 @@ import svgheroContent from '../assets/hero-content.svg'
 import svgRedStar from '../assets/red-star.svg'
 import svgIdea from '../assets/idea.svg'
 import svgArrow from '../assets/arrow.svg'
-import Dyce from '../assets/dyce.jpg'
+import Dyce from '../assets/Dyce.jpg'
 
 import svgPinkStar from '../assets/pink-star.svg'
 import svgString from '../assets/string.svg'
@@ -52,14 +52,10 @@ import { author, buy } from '../sample'
 
           <div class="relative p-8 bg-white">
             <img src={svgRedStar.src} width="80" alt="red-star" class="absolute bottom-1 right-1 z-10" />
-            <img src={svgIdea.src} width="60" alt="idea" class="absolute top-16 -left-3 z-10" />   
+            <img src={svgIdea.src} width="60" alt="idea" class="absolute top-16 -left-3 z-10" />
             <img src={svgString.src} width="50" alt="string" class="absolute -top-6 -right-2 z-10" />
 
-            <div
-                id="me"
-                class="w-full h-[310px] border-2"
-                style={`background-image: url(${Dyce.src}); background-position: top; background-size: cover;`}
-            ></div>
+            <div id="me" class="w-full h-[310px] border-2"></div>
              <Bars />
           </div>
         </div>
@@ -70,4 +66,11 @@ import { author, buy } from '../sample'
     <img src={svgPinkStar.src} alt="start" width="50" class="absolute -bottom-4" />
   </section>
 
+<style>
+  #me {
+    background-image: url("/src/assets/Dyce.jpg");
+    background-position: top;
+    background-size: cover;
+  }
+</style>
 
