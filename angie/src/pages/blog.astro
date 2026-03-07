@@ -1,0 +1,52 @@
+---
+import '../styles/global.css'
+import Layout from "../layouts/Layout.astro";
+
+import AppHeader from '../components/Header.astro';
+import AppFooter from '../components/Footer.astro';
+
+import VlogList from '../reactcomponent/VlogList.jsx';
+
+// YouTube video IDs
+const videoIds = [
+    "Pc3DUCNdGZU","PvdL0Q2N5IU","Z5DL-asMO6U","qD9WENmg41o",
+    "WW7nxfObbYA","wLLwgvFPcCk","FWtjHAnzC0Q","BUMo5IEkUXw",
+    "dkrIkmSJs84","lqvkubpyiGM","DkC5YXIIL-0"
+];
+
+// server-side fetch
+const apiKey = import.meta.env.YOUTUBE_API_KEY;
+const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoIds.join(",")}&key=${apiKey}`;
+const res = await fetch(url);
+const json = await res.json();
+
+// map video IDs to title + description
+const videos = {};
+if (json.items) {
+    json.items.forEach(item => {
+        videos[item.id] = {
+            title: item.snippet.title,
+            description: item.snippet.description
+        };
+    });
+} else {
+    console.warn("YouTube API returned no items:", json);
+}
+---
+
+<Layout>
+    <AppHeader />
+
+    <section class="py-40">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-15">
+                <h1 class="title text-5xl font-black">Vlog Articles</h1>
+            </div>
+            <div class="p-3">
+                <VlogList client:load videos={videos} />
+            </div>
+        </div>
+    </section>
+
+    <AppFooter />
+</Layout>
