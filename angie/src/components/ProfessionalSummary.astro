@@ -1,0 +1,282 @@
+---
+import Resume from '../assets/ProfessionalSummary/Resume.pdf'
+import Cbar from '../assets/ProfessionalSummary/CBAR_Internship.pdf'
+---
+
+<section class="ps-section">
+    <div class="ps-inner">
+
+        <!-- Cards row -->
+        <div class="ps-cards">
+
+            <!-- Resume Card -->
+            <div class="ps-card" id="card-resume" data-pdf={Resume} data-label="Résumé">
+                <div class="ps-card-top">
+                    <span class="ps-tag">PDF</span>
+                    <span class="ps-icon">📄</span>
+                </div>
+                <h3>Curriculum Vitae</h3>
+                <p>Teaching background, certifications, and professional experience.</p>
+                <button class="ps-btn" data-target="card-resume">
+                    View Document <span class="ps-arrow">↓</span>
+                </button>
+            </div>
+
+            <!-- CBAR Card -->
+            <div class="ps-card" id="card-cbar" data-pdf={Cbar} data-label="CBAR Philippines">
+                <div class="ps-card-top">
+                    <span class="ps-tag">PDF</span>
+                    <span class="ps-icon">🏥</span>
+                </div>
+                <h3>CBAR Philippines</h3>
+                <p>Clasroom-Based Action Research.</p>
+                <button class="ps-btn" data-target="card-cbar">
+                    View Document <span class="ps-arrow">↓</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Expandable viewer (hidden by default) -->
+        <div class="ps-viewer" id="ps-viewer">
+            <div class="ps-viewer-header">
+                <span class="ps-viewer-label" id="ps-viewer-label">Document</span>
+                <div class="ps-viewer-actions">
+                    <a class="ps-viewer-download" id="ps-viewer-download" href="#" download target="_blank">
+                        ↓ Download
+                    </a>
+                    <button class="ps-viewer-close" id="ps-viewer-close">✕ Close</button>
+                </div>
+            </div>
+            <iframe id="ps-iframe" src="" title="Document viewer"></iframe>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const cards = document.querySelectorAll('.ps-card');
+    const viewer = document.getElementById('ps-viewer')!;
+    const iframe = document.getElementById('ps-iframe') as HTMLIFrameElement;
+    const label  = document.getElementById('ps-viewer-label')!;
+    const dl     = document.getElementById('ps-viewer-download') as HTMLAnchorElement;
+    const close  = document.getElementById('ps-viewer-close')!;
+
+    let activeCard: Element | null = null;
+
+    cards.forEach(card => {
+        const btn = card.querySelector('.ps-btn') as HTMLButtonElement;
+        btn.addEventListener('click', () => {
+            const pdf      = card.getAttribute('data-pdf')!;
+            const cardLabel = card.getAttribute('data-label')!;
+            const arrow    = btn.querySelector('.ps-arrow')!;
+
+            // If same card is open → close
+            if (activeCard === card && viewer.classList.contains('open')) {
+                viewer.classList.remove('open');
+                arrow.textContent = '↓';
+                activeCard = null;
+                return;
+            }
+
+            // Reset all arrows
+            document.querySelectorAll('.ps-arrow').forEach(a => a.textContent = '↓');
+
+            // Open viewer
+            iframe.src = pdf;
+            label.textContent = cardLabel;
+            dl.href = pdf;
+            viewer.classList.add('open');
+            arrow.textContent = '↑';
+            activeCard = card;
+
+            // Smooth scroll into view
+            setTimeout(() => viewer.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+        });
+    });
+
+    close.addEventListener('click', () => {
+        viewer.classList.remove('open');
+        document.querySelectorAll('.ps-arrow').forEach(a => a.textContent = '↓');
+        iframe.src = '';
+        activeCard = null;
+    });
+</script>
+
+<style>
+    :root {
+        --ink:    #1a1a18;
+        --cream:  #f5f0e8;
+        --gold:   #e8b84b;
+        --border: #d4cfc4;
+        --white:  #ffffff;
+    }
+
+    .ps-section {
+        background: var(--cream);
+        font-family: 'DM Sans', sans-serif;
+    }
+
+    .ps-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 80px 48px;
+    }
+
+    /* ── CARDS ── */
+    .ps-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border: 1.5px solid var(--ink);
+    }
+
+    .ps-card {
+        padding: 40px 36px;
+        border-right: 1.5px solid var(--ink);
+        transition: background .2s;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .ps-card:last-child { border-right: none; }
+    .ps-card:hover { background: #ede8de; }
+
+    .ps-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+    }
+
+    .ps-tag {
+        font-size: .7rem;
+        font-weight: 600;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        background: var(--ink);
+        color: var(--cream);
+        padding: 3px 10px;
+        border-radius: 100px;
+    }
+
+    .ps-icon { font-size: 1.6rem; }
+
+    .ps-card h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+
+    .ps-card p {
+        font-size: .92rem;
+        color: #666;
+        line-height: 1.7;
+        flex: 1;
+    }
+
+    .ps-btn {
+        margin-top: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 24px;
+        background: var(--ink);
+        color: var(--cream);
+        border: 2px solid var(--ink);
+        border-radius: 100px;
+        font-size: .85rem;
+        font-weight: 500;
+        cursor: pointer;
+        width: fit-content;
+        transition: background .2s, color .2s;
+    }
+
+    .ps-btn:hover {
+        background: transparent;
+        color: var(--ink);
+    }
+
+    .ps-arrow {
+        display: inline-block;
+        transition: transform .25s;
+    }
+
+    /* ── VIEWER ── */
+    .ps-viewer {
+        border: 1.5px solid var(--ink);
+        border-top: none;
+        background: var(--white);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .45s cubic-bezier(.4,0,.2,1);
+    }
+
+    .ps-viewer.open {
+        max-height: 900px;
+    }
+
+    .ps-viewer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 28px;
+        border-bottom: 1.5px solid var(--border);
+        background: var(--ink);
+        color: var(--cream);
+    }
+
+    .ps-viewer-label {
+        font-family: 'Playfair Display', serif;
+        font-size: 1rem;
+        font-style: italic;
+    }
+
+    .ps-viewer-actions {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .ps-viewer-download {
+        font-size: .82rem;
+        font-weight: 500;
+        color: var(--gold);
+        text-decoration: none;
+        letter-spacing: .05em;
+    }
+
+    .ps-viewer-download:hover { text-decoration: underline; }
+
+    .ps-viewer-close {
+        font-size: .82rem;
+        font-weight: 500;
+        background: none;
+        border: 1px solid rgba(255,255,255,.3);
+        color: var(--cream);
+        padding: 5px 14px;
+        border-radius: 100px;
+        cursor: pointer;
+        transition: background .2s;
+    }
+
+    .ps-viewer-close:hover { background: rgba(255,255,255,.1); }
+
+    #ps-iframe {
+        width: 100%;
+        height: 780px;
+        border: none;
+        display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+        .ps-inner  { padding: 48px 20px; }
+        .ps-cards  { grid-template-columns: 1fr; }
+        .ps-card   { border-right: none; border-bottom: 1.5px solid var(--ink); }
+        .ps-card:last-child { border-bottom: none; }
+        #ps-iframe { height: 500px; }
+    }
+</style>
