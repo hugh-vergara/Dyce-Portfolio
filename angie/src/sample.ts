@@ -9,7 +9,7 @@ const author = {
 
 const buy = {
   title: `Message me `,
-  link: `mailto:dyxalusgallano@su.edu.ph`,
+  link: `mailto:gallanodyxalu@gmail.com`,
 };
 
 export { author, buy };
