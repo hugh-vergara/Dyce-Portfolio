@@ -1,6 +1,6 @@
 const author = {
   name: `Dyxalu`,
-  nickname: `Dyce`,
+  nickname: `Dyxalu`,
   // tiktok: `https://www.tiktok.com/@indieteamofone`,
   ig: `https://www.instagram.com/gallanodyce/`,
   x: `https://x.com/indieteamofone`,
