@@ -89,6 +89,8 @@
         </div>
 
         <div class="ack-grid">
+
+            <!-- Row 1: two cards -->
             <div class="ack-card">
                 <p>Thank you for guiding me, sharing your knowledge, and encouraging me to grow. Your mentorship shaped the teacher I am becoming.</p>
                 <div class="ack-person">
@@ -109,6 +111,23 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Row 2: Miko centered alone -->
+            <div class="ack-card ack-card--miko">
+                <div class="miko-hearts">
+                    <span>💗</span><span>💗</span><span>💗</span>
+                </div>
+                <p>To my Miko, thank you for being the constant source of my motivation. You always push me to become better and never hesitate to be my honest critic when I need it most. Even with the distance between us, you never fail to show up. Thank you for being my safe place, my little reminder that I can do more and be more.</p>
+                <div class="ack-person">
+                    <div class="ack-avatar ack-avatar--miko">🥰</div>
+                    <div>
+                        <div class="ack-name">Miko</div>
+                        <div class="ack-role">My constant motivation & safe place</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3: two cards -->
             <div class="ack-card">
                 <p>To my groupmates  thank you for the late nights, shared laughs, honest feedback, and the kind of teamwork that made every challenge lighter.</p>
                 <div class="ack-person">
@@ -124,11 +143,12 @@
                 <div class="ack-person">
                     <div class="ack-avatar">❤️</div>
                     <div>
-                        <div class="ack-name">Family, Friends and Hugh </div>
+                        <div class="ack-name">Family, Friends and Hugh</div>
                         <div class="ack-role">My greatest support system</div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -140,6 +160,7 @@
         --ink:   #1a1a18;
         --gold:  #e8b84b;
         --border: #d4cfc4;
+        --rose:  #f7d6e0;
     }
 
     .experience {
@@ -230,7 +251,7 @@
         transition: background .2s;
     }
 
-    .card:nth-child(2n)       { border-right: none; }
+    .card:nth-child(2n)        { border-right: none; }
     .card:nth-last-child(-n+2) { border-bottom: none; }
     .card:hover { background: #ede8de; }
 
@@ -344,6 +365,51 @@
         margin-bottom: 20px;
     }
 
+    /* Miko special card — spans both columns, centered */
+    .ack-card--miko {
+        grid-column: 1 / -1;
+        max-width: 600px;
+        width: 100%;
+        margin: 0 auto;
+        background: var(--rose);
+        border-color: #e0a0b8;
+        text-align: center;
+    }
+
+    .ack-card--miko::before {
+        color: #e8b4c8;
+    }
+
+    .ack-card--miko p {
+        font-size: 1rem;
+        color: #5a2a3a;
+        line-height: 1.8;
+    }
+
+    .ack-card--miko .ack-person {
+        justify-content: center;
+    }
+
+    .ack-avatar--miko {
+        background: #f7c5d5 !important;
+        border-color: #e0a0b8 !important;
+    }
+
+    .ack-card--miko .ack-name {
+        color: #5a2a3a;
+        font-weight: 700;
+    }
+
+    .ack-card--miko .ack-role {
+        color: #a06070;
+    }
+
+    .miko-hearts {
+        font-size: 1.3rem;
+        margin-bottom: 16px;
+        letter-spacing: 6px;
+    }
+
     .ack-person {
         display: flex;
         align-items: center;
@@ -360,6 +426,7 @@
         align-items: center;
         justify-content: center;
         font-size: 1.1rem;
+        flex-shrink: 0;
     }
 
     .ack-name {
@@ -385,5 +452,6 @@
         .stat-item:last-child { border-bottom: none; }
         .reflection-layout  { grid-template-columns: 1fr; }
         .reflection-sidebar { border-right: none; border-bottom: 1.5px solid var(--ink); }
+        .ack-card--miko     { grid-column: 1; max-width: 100%; }
     }
 </style>
